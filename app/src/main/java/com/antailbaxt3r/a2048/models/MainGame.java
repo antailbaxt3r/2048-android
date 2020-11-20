@@ -246,6 +246,11 @@ public class MainGame {
         if (!movesAvailable() && !gameWon()) {
             gameState = GAME_LOST;
             endGame();
+        }else if (intSum() == 8) {
+            gameState = GAME_WIN;
+            endGame();
+        }else if (intSum() > 8) {
+            revertUndoState();
         }
     }
 
@@ -354,5 +359,17 @@ public class MainGame {
 
     public boolean canContinue() {
         return !(gameState == GAME_ENDLESS || gameState == GAME_ENDLESS_WON);
+    }
+
+    public int intSum() {
+        Tile[][] f = grid.field;
+        int sum = 0;
+        for(Tile[] t : f){
+            for(Tile i : t){
+                if(i != null)
+                    sum += i.getValue();
+            }
+        }
+        return sum;
     }
 }
